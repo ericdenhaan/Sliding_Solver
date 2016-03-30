@@ -5,17 +5,12 @@
 
 #include "Board_Tile.h"
 
-// constructors
-Board_Tile::Board_Tile()
-{
-   return NULL;
-}
-
-Board_Tile::Board_Tile(const string&)
+// Constructor
+Board_Tile::Board_Tile(const string& s)
 {
 }
 
-// destructor
+// Destructor
 Board_Tile::~Board_Tile()
 {
 }

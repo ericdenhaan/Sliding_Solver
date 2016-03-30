@@ -4,7 +4,7 @@ CCCFLAGS = -Wall -g -std=c++11 -lpthread -lX11
 
 all : main
 
-main : Board_Tile.h Sliding_Solver.h main.o
+main : Board_Tile.o Sliding_Solver.o main.o
 	$(CCC) $(CCCFLAGS) -o $@ $^
 
 %.o : %.cc

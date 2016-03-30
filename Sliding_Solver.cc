@@ -5,12 +5,7 @@
 
 #include "Sliding_Solver.h"
 
-//Constructors
-Sliding_Solver::Sliding_Solver()
-{
-   return NULL;
-}
-
+//Constructor
 Sliding_Solver::Sliding_Solver(const string&)
 {
 }

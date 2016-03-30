@@ -13,8 +13,7 @@ using namespace std;
 class Sliding_Solver
 {
 public:
-	//Constructors
-	Sliding_Solver();
+	//Constructor
 	Sliding_Solver(const string&);
 
 	//Destructor

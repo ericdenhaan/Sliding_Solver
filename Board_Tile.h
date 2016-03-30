@@ -12,8 +12,7 @@ using namespace std;
 class Board_Tile
 {
 public:
-	//Constructors
-	Board_Tile();
+	//Constructor
 	Board_Tile(const string&);
 
 	//Destructor
