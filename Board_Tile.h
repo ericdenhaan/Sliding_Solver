@@ -27,7 +27,7 @@ public:
 
   private:
 	//this data member is the 2D array tht stores the config string
-	int **Array;
+	char **Array;
 	string config;
 	string moves_from_start;
 };

@@ -8,17 +8,17 @@
 // Constructor
 Board_Tile::Board_Tile(const string& s)
 {
-   Array = new int *[3];
-   for(int i = 0; i < 3; i++)
+   Array = new char *[3];
+   for (int i = 0; i < 3; i++)
    {
-      Array[i] = new int[3];
+      Array[i] = new char[3];
    }
-
+   
    for(int i = 0; i < 3; i++)
    {
       for(int j = 0; j < 3; j++)
       {
-	 Array[i][j] = s.at(i+j);
+	 Array[i][j] = s.at(i*3+j);
       }
    }
 
@@ -92,11 +92,10 @@ ostream& operator<<(ostream& os, const Board_Tile& B)
    {
       for(int j = 0; j < 3; j++)
       {
-     os  << B.Array[i][j] << " ";
+	 os  << B.Array[i][j] << " ";
       }
       os << endl;
    }
-   os << endl;
    return os;
 }
 

@@ -8,7 +8,7 @@
 int main()
 {
 
-   std::string initialconfig = "0,1,2,3,4,5,6,7,8,";
+   std::string initialconfig = "012345678";
    Board_Tile initial(initialconfig);
    //testing the constructor to make sure is representing correctly
    std::cout << initial << std::endl;
