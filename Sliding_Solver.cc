@@ -10,6 +10,6 @@ Sliding_Solver::Sliding_Solver(const string&)
 {
 }
 
-void Sliding_Solver::Solve_Puzzle();
+void Sliding_Solver::Solve_Puzzle()
 {
 }

@@ -21,6 +21,8 @@ Board_Tile::Board_Tile(const string& s)
 	 Array[i][j] = s.at(i+j);
       }
    }
+
+   config = s;
 }
 
 // Destructor
@@ -40,12 +42,12 @@ void Board_Tile::nextConfigs()
    // just an idea of maybe how to do this:
    
    // iterate through the string "config" and find "0", the empty slot
-   int emptypos = config.find('0');
+   // int emptypos = config.find('0');
 
    // switch statement, with the possible positions of '0' and their moves
    // depending on the position of '0', each case returns the possible new versions
    // of config
-   switch(9)
+   /*switch(9)
    {
       case 1:
 	 // can move D, L, R
@@ -66,7 +68,7 @@ void Board_Tile::nextConfigs()
       default://position 0
          // can move D, U
    }
-   // have to figure out how to return a list of Board_Tile objects from this function
+   // have to figure out how to return a list of Board_Tile objects from this function*/
 }
 
 int Board_Tile::numMoves()
@@ -81,6 +83,21 @@ int Board_Tile::Manhattan_Distance(const Board_Tile& goalconfig)
    // then subtract currentobject[i]'s position from goalconfig[i]'s position
    // and find the absolute value of that number
    // then sum up all of the absolute values and return this as manhattan distance
+}
+
+//print function (<< operator)
+ostream& operator<<(ostream& os, const Board_Tile& B)
+{
+   for(int i = 0; i < 3; i++)
+   {
+      for(int j = 0; j < 3; j++)
+      {
+     os  << B.Array[i][j] << " ";
+      }
+      os << endl;
+   }
+   os << endl;
+   return os;
 }
 
 

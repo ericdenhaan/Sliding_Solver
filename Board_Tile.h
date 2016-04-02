@@ -4,6 +4,7 @@
 // Written By: Eric Den Haan, Josh Vandenhoek, Lance Chisholm
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 #ifndef BOARD_TILE
@@ -22,6 +23,7 @@ public:
 	void nextConfigs();
 	int numMoves();
 	int Manhattan_Distance(const Board_Tile&);
+	friend ostream& operator<<(ostream& os, const Board_Tile& B);
 
   private:
 	//this data member is the 2D array tht stores the config string
