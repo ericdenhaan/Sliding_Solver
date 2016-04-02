@@ -23,7 +23,9 @@ public:
 	int numMoves();
 	int Manhattan_Distance(const Board_Tile&);
 
-private:
+  private:
+	//this data member is the 2D array tht stores the config string
+	int **Array;
 	string config;
 	string moves_from_start;
 };
