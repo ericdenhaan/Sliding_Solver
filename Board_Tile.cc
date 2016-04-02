@@ -78,11 +78,35 @@ int Board_Tile::numMoves()
 
 int Board_Tile::Manhattan_Distance(const Board_Tile& goalconfig)
 {
-   // iterate through the current object
-   // if currentobject[i] != goalconfig[i]
-   // then subtract currentobject[i]'s position from goalconfig[i]'s position
-   // and find the absolute value of that number
-   // then sum up all of the absolute values and return this as manhattan distance
+   int m_dist = 0;
+   for(int i = 0; i < 3; i++)
+   {
+      for(int j = 0; j < 3; j++)
+      {
+	 char initial_value = this->Array[i][j];
+	 int initial_x = i;
+	 int initial_y = j;
+
+	 if(initial_value != '0')
+	 {
+	    for(int k = 0; k < 3; k++)
+	    {
+	       for(int l = 0; l < 3; l++)
+	       {
+		  char goal_value = goalconfig.Array[k][l];
+		  int goal_x = k;
+		  int goal_y = l;
+		  
+		  if(initial_value == goal_value)
+		  {
+		     m_dist += abs(initial_x - goal_x) + abs(initial_y - goal_y);
+		  }
+	       }
+	    }
+	 }
+      }
+   }
+   return m_dist;
 }
 
 //print function (<< operator)

@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 #ifndef BOARD_TILE
