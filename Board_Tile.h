@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <cmath>
+#include <list>
 using namespace std;
 
 #ifndef BOARD_TILE
@@ -15,16 +16,24 @@ class Board_Tile
 {
 public:
 	//Constructor
-	Board_Tile(const string&);
+   Board_Tile(const string&);
+
+   //copy constructor
+
+   Board_Tile(const Board_Tile&);
 
 	//Destructor
 	~Board_Tile();
 
 	//Member Functions
-	void nextConfigs();
+	list<Board_Tile> nextConfigs();
 	int numMoves();
 	int Manhattan_Distance(const Board_Tile&);
-	friend ostream& operator<<(ostream& os, const Board_Tile& B);
+	friend ostream& operator<<(ostream& os, const Board_Tile&);
+	Board_Tile rightMove(int, int);
+	Board_Tile leftMove(int, int);
+	Board_Tile upMove(int, int);
+	Board_Tile downMove(int, int);
 
   private:
 	//this data member is the 2D array tht stores the config string

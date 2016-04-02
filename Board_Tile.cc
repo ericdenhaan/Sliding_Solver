@@ -5,6 +5,7 @@
 
 #include "Board_Tile.h"
 
+
 // Constructor
 Board_Tile::Board_Tile(const string& s)
 {
@@ -25,6 +26,27 @@ Board_Tile::Board_Tile(const string& s)
    config = s;
 }
 
+//Copy Constructor
+
+Board_Tile::Board_Tile(const Board_Tile& copy)
+{
+   Array = new char*[3];
+   for (int i = 0; i < 3; i++)
+   {
+      Array[i] = new char[3];
+   }
+ 
+   for (int i = 0; i < 3; i++)
+   {
+      for(int j = 0; j < 3; j++)
+      {
+	 Array[i][j] = copy.Array[i][j];
+      }
+   }
+
+   config = copy.config;
+}
+   
 // Destructor
 Board_Tile::~Board_Tile()
 {
@@ -37,43 +59,110 @@ Board_Tile::~Board_Tile()
    Array = nullptr;
 }
 
-void Board_Tile::nextConfigs()
+list<Board_Tile> Board_Tile::nextConfigs()
 {
-   // just an idea of maybe how to do this:
+   list<Board_Tile> nextConfigList;
+
+   int indexi;
+   int indexj;
+   
+   for (int i=0; i < 3; i++)
+   {
+      for (int j =0; j < 3; j++)
+      {
+	 if (this->Array[i][j] == '0')
+	 {
+	    indexi = i;
+	    indexj = j;
+	 }
+	 
+      }
+   }
    
    // iterate through the string "config" and find "0", the empty slot
-   // int emptypos = config.find('0');
+   int emptypos = indexi*3 +indexj;
+
+  
+
 
    // switch statement, with the possible positions of '0' and their moves
    // depending on the position of '0', each case returns the possible new versions
    // of config
-   /*switch(9)
+   switch(emptypos)
    {
       case 1:
 	 // can move D, L, R
+	 nextConfigList.push_back(leftMove(indexi,indexj));
+	 nextConfigList.push_back(rightMove(indexi,indexj));
+	 nextConfigList.push_back(downMove(indexi,indexj));
+	 break;
+	 
       case 2:
 	 // can move D, L
+	 nextConfigList.push_back(leftMove(indexi,indexj));
+	 nextConfigList.push_back(downMove(indexi,indexj));
+	 break;
       case 3:
 	 // can move U, R, D
+	 nextConfigList.push_back(rightMove(indexi,indexj));
+	 nextConfigList.push_back(upMove(indexi,indexj));
+	 nextConfigList.push_back(downMove(indexi,indexj));
+	 break;
+	 
       case 4:
 	 // can move L, U, R, D
+	 nextConfigList.push_back(leftMove(indexi,indexj));
+	 nextConfigList.push_back(rightMove(indexi,indexj));
+	 nextConfigList.push_back(upMove(indexi,indexj));
+	 nextConfigList.push_back(downMove(indexi,indexj));
+	 break;
+	 
       case 5:
 	 // can move L, U, D
+	 nextConfigList.push_back(leftMove(indexi,indexj));
+	 nextConfigList.push_back(upMove(indexi,indexj));
+	 nextConfigList.push_back(downMove(indexi,indexj));
+	 break;
+	 
       case 6:
 	 // can move U, R
+
+	 nextConfigList.push_back(rightMove(indexi,indexj));
+	 nextConfigList.push_back(upMove(indexi,indexj));
+	 
+	 break;
+	 
       case 7:
 	 // can move L, U, R
+	 nextConfigList.push_back(leftMove(indexi,indexj));
+	 nextConfigList.push_back(rightMove(indexi,indexj));
+	 nextConfigList.push_back(upMove(indexi,indexj));
+	 
+	 break;
+
+	 
       case 8:
 	 // can move L, U
-      default://position 0
+	  nextConfigList.push_back(leftMove(indexi,indexj));
+	  nextConfigList.push_back(upMove(indexi,indexj));
+	  break;
+      default:
          // can move D, U
+	 nextConfigList.push_back(upMove(indexi,indexj));
+	 nextConfigList.push_back(downMove(indexi,indexj));
+	 
+	 break;
+	 
+	 
    }
+
+   return nextConfigList;
    // have to figure out how to return a list of Board_Tile objects from this function*/
 }
 
 int Board_Tile::numMoves()
 {
-   // needs to return the size of the moves_from_start string
+   return moves_from_start.size();
 }
 
 int Board_Tile::Manhattan_Distance(const Board_Tile& goalconfig)
@@ -122,5 +211,44 @@ ostream& operator<<(ostream& os, const Board_Tile& B)
    }
    return os;
 }
+
+//movement functions
+
+
+Board_Tile Board_Tile::rightMove(int i, int j)
+{
+   
+   Board_Tile* b = new Board_Tile(*this);
+   
+   swap(b->Array[i][j], b->Array[i][j+1]);
+   return *b;
+}
+
+
+
+Board_Tile Board_Tile::leftMove(int i, int j)
+{
+Board_Tile* b = new Board_Tile(*this);
+   swap(b->Array[i][j], b->Array[i][j-1]);
+   return *b;
+}
+
+Board_Tile Board_Tile::upMove(int i, int j)
+{
+   Board_Tile* b = new Board_Tile(*this);
+   swap(b->Array[i][j], b->Array[i-1][j]);
+   return *b;
+}
+
+Board_Tile Board_Tile::downMove(int i, int j)
+{
+
+   Board_Tile* b = new Board_Tile(*this);
+   swap(b->Array[i][j], b->Array[i+1][j]);
+   return *b;
+}
+
+
+      
 
 
