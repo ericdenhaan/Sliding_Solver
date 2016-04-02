@@ -4,6 +4,7 @@
 // Written By: Eric Den Haan, Josh Vandenhoek, Lance Chisholm
 
 #include <string>
+#include "Board_Tile.h"
 using namespace std;
 
 
@@ -13,7 +14,9 @@ using namespace std;
 class Sliding_Solver
 {
 public:
-	//Constructor
+   //Constructor
+
+   //the const string must be the start configuration?
 	Sliding_Solver(const string&);
 
 	//Destructor
@@ -21,8 +24,12 @@ public:
 
 	//Member Functions
 	void Solve_Puzzle();
+	//setter function that allows us to change the goalString
+	void setGoalString(const string &);
 
-private:
+  private:
+	
+	string goalString;
 
 };
 #endif

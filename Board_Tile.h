@@ -33,6 +33,8 @@ class Board_Tile
    Board_Tile leftMove(int, int);
    Board_Tile upMove(int, int);
    Board_Tile downMove(int, int);
+   void addMove(const string&);
+   bool operator==(const Board_Tile&);
    
   private:
    //this data member is the 2D array tht stores the config string

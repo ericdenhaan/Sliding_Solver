@@ -232,6 +232,26 @@ Board_Tile Board_Tile::downMove(int i, int j)
 }
 
 
+void Board_Tile::addMove(const string& s)
+{
+   config = config + s;
+}
+
+bool Board_Tile::operator==(const Board_Tile& bt)
+{
+   for (int i = 0; i < 3 ; i++)
+   {
+      for (int j = 0; j < 3; j++)
+      {
+	 if (this->Array[i][j] != bt.Array[i][j])
+	 {
+	    return false;
+	 }
+      }
+   }
+   return true;
+}
+
       
 
 
