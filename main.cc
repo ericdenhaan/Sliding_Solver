@@ -20,22 +20,16 @@ int main()
 
    masterList = initial.nextConfigs();
 
-   std::cout << initial << std::endl;
+   cout << "Initial: " << endl << initial << endl;
+   cout << "Goal: " << endl << goal << endl;
 
+   cout << "Next Configs: " << endl;
    for (list<Board_Tile>::iterator it = masterList.begin(); it != masterList.end(); ++it)
    {
       cout << (*it) << endl;
-
    }
    
-
-   
-
-   
-   
    //testing the constructor to make sure is representing correctly
-   /*std::cout << initial << std::endl;
-   std::cout << goal << std::endl;
-   std::cout << m_distance;*/
+   std::cout << "Manhattan Distance: " << m_distance << endl;
    return 0;
 }

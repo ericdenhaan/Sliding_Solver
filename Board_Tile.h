@@ -14,31 +14,30 @@ using namespace std;
 
 class Board_Tile
 {
-public:
-	//Constructor
+  public:
+   //Constructor
    Board_Tile(const string&);
-
-   //copy constructor
-
+   
+   //Copy Constructor
    Board_Tile(const Board_Tile&);
-
-	//Destructor
-	~Board_Tile();
-
-	//Member Functions
-	list<Board_Tile> nextConfigs();
-	int numMoves();
-	int Manhattan_Distance(const Board_Tile&);
-	friend ostream& operator<<(ostream& os, const Board_Tile&);
-	Board_Tile rightMove(int, int);
-	Board_Tile leftMove(int, int);
-	Board_Tile upMove(int, int);
-	Board_Tile downMove(int, int);
-
+   
+   //Destructor
+   ~Board_Tile();
+   
+   //Member Functions
+   list<Board_Tile> nextConfigs();
+   int numMoves();
+   int Manhattan_Distance(const Board_Tile&);
+   friend ostream& operator<<(ostream& os, const Board_Tile&);
+   Board_Tile rightMove(int, int);
+   Board_Tile leftMove(int, int);
+   Board_Tile upMove(int, int);
+   Board_Tile downMove(int, int);
+   
   private:
-	//this data member is the 2D array tht stores the config string
-	char **Array;
-	string config;
-	string moves_from_start;
+   //this data member is the 2D array tht stores the config string
+   char **Array;
+   string config;
+   string moves_from_start;
 };
 #endif
