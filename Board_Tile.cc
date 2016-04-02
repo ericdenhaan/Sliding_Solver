@@ -8,12 +8,31 @@
 // Constructor
 Board_Tile::Board_Tile(const string& s)
 {
-   // should we keep it as a string or represent as a 2D array?
+   Array = new int *[3];
+   for(int i = 0; i < 3; i++)
+   {
+      Array[i] = new int[3];
+   }
+
+   for(int i = 0; i < 3; i++)
+   {
+      for(int j = 0; j < 3; j++)
+      {
+	 Array[i][j] = s.at(i+j);
+      }
+   }
 }
 
 // Destructor
 Board_Tile::~Board_Tile()
 {
+   for(int i = 0; i < 3; i++)
+   {
+      delete [] Array[i];
+   }
+ 
+   delete [] Array;
+   Array = nullptr;
 }
 
 void Board_Tile::nextConfigs()
