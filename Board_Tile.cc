@@ -57,6 +57,7 @@ Board_Tile::~Board_Tile()
    Array = nullptr;
 }
 
+//nextConfigs Function
 list<Board_Tile> Board_Tile::nextConfigs()
 {
    list<Board_Tile> nextConfigList;
