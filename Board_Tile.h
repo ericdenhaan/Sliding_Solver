@@ -15,7 +15,10 @@ using namespace std;
 class Board_Tile
 {
   public:
-   //Constructor
+
+   //default constructor
+   Board_Tile();
+//Constructor with parameters
    Board_Tile(const string&);
    
    //Copy Constructor
@@ -35,11 +38,16 @@ class Board_Tile
    Board_Tile downMove(int, int);
    void addMove(const string&);
    bool operator==(const Board_Tile&);
+   //perhaps an assignment operator for replacing
+   //configurations in the tree
+   Board_Tile operator=(const Board_Tile&);
    
   private:
    //this data member is the 2D array tht stores the config string
    char **Array;
    string config;
    string moves_from_start;
+   //maybe a data member that tracks the value for the A* search?
+   //int totalCost=0;
 };
 #endif

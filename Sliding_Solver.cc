@@ -1,3 +1,6 @@
+
+
+
 // CPSC3620
 // Project
 // Sliding_Solver Class Implementation
@@ -12,6 +15,9 @@ Sliding_Solver::Sliding_Solver(const string& s)
    
 }
 
+
+//this is the function that will be responsible for solving the puzzle,
+//probably implementing the A* search algorithm
 void Sliding_Solver::Solve_Puzzle()
 {
    
@@ -26,4 +32,6 @@ void Sliding_Solver::setGoalString(const string & s)
 {
    goalString = s;
 }
+
+
    

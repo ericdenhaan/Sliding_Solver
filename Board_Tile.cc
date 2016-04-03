@@ -5,7 +5,9 @@
 
 #include "Board_Tile.h"
 
-// Constructor
+
+
+// Constructor with parameters
 Board_Tile::Board_Tile(const string& s)
 {
    Array = new char *[3];
@@ -252,6 +254,23 @@ bool Board_Tile::operator==(const Board_Tile& bt)
    }
    return true;
 }
+
+Board_Tile Board_Tile::operator=(const Board_Tile& bt)
+{
+
+   for (int i=0;i <3; i++)
+   {
+      for (int j =0; j < 3; j++)
+      {
+	 this->Array[i][j] = bt.Array[i][j];
+      }
+   }
+
+   return *this;
+	 
+
+}
+
 
       
 
