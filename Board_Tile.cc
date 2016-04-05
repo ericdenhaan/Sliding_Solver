@@ -210,6 +210,7 @@ Board_Tile Board_Tile::rightMove(int i, int j)
 {
    Board_Tile* b = new Board_Tile(*this);
    swap(b->Array[i][j], b->Array[i][j+1]);
+   b->addMove("R");
    return *b;
 }
 
@@ -217,6 +218,7 @@ Board_Tile Board_Tile::leftMove(int i, int j)
 {
    Board_Tile* b = new Board_Tile(*this);
    swap(b->Array[i][j], b->Array[i][j-1]);
+   b->addMove("L");
    return *b;
 }
 
@@ -224,6 +226,7 @@ Board_Tile Board_Tile::upMove(int i, int j)
 {
    Board_Tile* b = new Board_Tile(*this);
    swap(b->Array[i][j], b->Array[i-1][j]);
+   b->addMove("U");
    return *b;
 }
 
@@ -231,13 +234,14 @@ Board_Tile Board_Tile::downMove(int i, int j)
 {
    Board_Tile* b = new Board_Tile(*this);
    swap(b->Array[i][j], b->Array[i+1][j]);
+   b->addMove("D");
    return *b;
 }
 
 
 void Board_Tile::addMove(const string& s)
 {
-   config = config + s;
+   moves_from_start = moves_from_start + s;
 }
 
 bool Board_Tile::operator==(const Board_Tile& bt)
@@ -268,6 +272,12 @@ Board_Tile Board_Tile::operator=(const Board_Tile& bt)
 
    return *this;
 	 
+
+}
+
+int Board_Tile::getTotalCost() const 
+{
+   return totalCost;
 
 }
 
