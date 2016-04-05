@@ -242,6 +242,7 @@ Board_Tile Board_Tile::downMove(int i, int j)
 void Board_Tile::addMove(const string& s)
 {
    moves_from_start = moves_from_start + s;
+   totalCost= getTotalCost();
 }
 
 bool Board_Tile::operator==(const Board_Tile& bt)
@@ -270,17 +271,22 @@ Board_Tile Board_Tile::operator=(const Board_Tile& bt)
       }
    }
 
+   this->totalCost = bt.totalCost;
+
    return *this;
 	 
 
 }
 
+//need to be considering the goal config here!
+/*
 int Board_Tile::getTotalCost() const 
 {
+   totalCost = Manhattan_Distance() + numMoves();
    return totalCost;
 
 }
-
+*/
 
       
 
