@@ -4,10 +4,12 @@
 // Written By: Eric Den Haan, Josh Vandenhoek, Lance Chisholm
 
 #include "Board_Tile.h"
+#include "Sliding_Solver.h"
 
 int main()
 {
 
+   /*
    //generate list of Board tiles
    list<Board_Tile> masterList;
 
@@ -21,7 +23,6 @@ int main()
 
    //testing the default constructor
    //Board_Tile def();
-
    int m_distance = initial.Manhattan_Distance(goal);
 
    //generate nextConfigs for the initial Board_Tile and store in the Board_Tile list
@@ -41,9 +42,20 @@ int main()
 
    cout << "Initial after assignment to goal: " << endl << initial << endl;
 
-   
-   
    //testing the constructor to make sure is representing correctly
    std::cout << "Manhattan Distance: " << m_distance << endl;
+   */
+   string initialString, goalString;
+
+   cout << "Please enter the initial configuration: ";
+   cin >> initialString;
+   cout << endl;
+
+   Sliding_Solver test(initialString);
+   cout << "Enter the solution: ";
+   cin >> goalString;
+   cout << endl;
+   test.Solve_Puzzle(goalString);
+
    return 0;
 }

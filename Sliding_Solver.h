@@ -5,7 +5,9 @@
 
 #include <string>
 #include "Board_Tile.h"
-#include<queue>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
 
@@ -26,16 +28,12 @@ public:
 	//Member Functions
 	void Solve_Puzzle(const string&);
 	//setter function that allows us to change the goalString
-	void setGoalString(const string &);
-
-
+	void setGoalString(const string&);
 
   private:
-	
 	//private data member that represents the initial goal configuration as a 
 	//board tile
 	Board_Tile* initialConfig;
 	string goalString;
-
 };
 #endif

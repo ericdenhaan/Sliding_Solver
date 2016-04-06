@@ -15,10 +15,7 @@ using namespace std;
 class Board_Tile
 {
   public:
-
-   //default constructor
-   Board_Tile();
-//Constructor with parameters
+//Constructor
    Board_Tile(const string&);
    
    //Copy Constructor
@@ -42,7 +39,9 @@ class Board_Tile
    //configurations in the tree
    Board_Tile operator=(const Board_Tile&);
    //this will be used by the minheap for ordering
+   void setTotalCost(const string&);
    int getTotalCost() const;
+   string getMovesFromStart() const;
    
   private:
    //this data member is the 2D array tht stores the config string
@@ -50,6 +49,6 @@ class Board_Tile
    string config;
    string moves_from_start;
    //maybe a data member that tracks the value for the A* search
-   int totalCost=0;
+   int totalCost;
 };
 #endif

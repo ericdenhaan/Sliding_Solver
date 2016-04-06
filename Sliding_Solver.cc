@@ -1,6 +1,3 @@
-
-
-
 // CPSC3620
 // Project
 // Sliding_Solver Class Implementation
@@ -8,133 +5,139 @@
 
 #include "Sliding_Solver.h"
 
-
 struct compare 
 {
-
 	bool operator()(const Board_Tile& a, const Board_Tile& b)
 	{
 		if (a.getTotalCost() < b.getTotalCost())
 		{
 			return true;
 		}
-	else {
-		return false;
-			}	
+		else 
+		{
+			return false;
+		}	
 	}
 };
-
-
-
-
 
 //Constructor
 Sliding_Solver::Sliding_Solver(const string& s)
 {
-   initialConfig = new Board_Tile(s);
-   
+   initialConfig = new Board_Tile(s); 
+   cout << *initialConfig;
 }
 
+//Destructor
+Sliding_Solver::~Sliding_Solver(){}
 
 //this is the function that will be responsible for solving the puzzle,
 //probably implementing the A* search algorithm
 void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 {
+	goalString = goalConfig;
+	//set the initialconfig tile's total cost to begin with
+	initialConfig->setTotalCost(goalString);
 
 	//board tile list iterator
-	list <Board_Tile> iterator:: lit;
+	list<Board_Tile>::iterator lit;
 
 	Board_Tile* gc = new Board_Tile(goalConfig);
 
 	//this list will contain all the board configurations that are potentially good candidates
 	//for the path
-	list <Board_Tile> configsToEval;
+	list<Board_Tile> configsToEval;
 	
-
 	//these are the configurations we visited but were not good enough
-	
-
 	vector<Board_Tile> closedVector;
+	
 	//this will hold all of the valid nextconfigs to check
 	vector<Board_Tile> openVector;
 
 	//push the initial configuration into the open vector
 	openVector.push_back((*initialConfig));
 
+	cout << "Open Vector to Start: " << endl;
+	for (unsigned int i =0; i < openVector.size(); i++)
+	{
+		cout << openVector.at(i);
+	}
+
 	while (!openVector.empty())
 	{
-
-		
-
 		//this makes a heap out of the open vector
 		make_heap(openVector.begin(), openVector.end(), compare());
 
-		//pop the top
-		Board_Tile tempTop = openVector.pop();
+		//temporarily hold the top element
+		Board_Tile tempTop = openVector.back();
 
 
-
-		
-
-
-		if (openVector.begin() == gc)
+		//found the config
+		if (tempTop == (*gc))
 		{
-			cout <<openVector.begin()<<endl;
+			cout << tempTop << endl;
+			string temp = tempTop.getMovesFromStart();
+			cout << "Moves From Start: " << temp << endl;
+			int number = tempTop.numMoves();
+			cout << "Number of Moves: " << number << endl;
 			return;
 		}
+
+		//remove the top element
+		openVector.pop_back();
+		//we have discovered the node, so now we need to put it in the closed Vector
+		closedVector.push_back(tempTop);
+
 		//list of next configurations coming up from the current top value
-		configsToEval = tempTop->nextConfigs();
+		configsToEval = tempTop.nextConfigs();
 
-		
-
+		//push everything into the open list
+		for (lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
+		{
+			lit->setTotalCost(goalString);
+			openVector.push_back((*lit));
+		}
 
 		//for all nextConfigs, check to see if they are valid (i.e. visited yet and hence in the closed list)?
 		//if in closed list, disregard
+		for (unsigned int i = 0; i < openVector.size(); i++)
+		   {
+			for (unsigned int j =0; j < closedVector.size(); j++)
+		   	{
+		   		//if the board tile in the configsToEval list is a member of the 
+		   		//closedList, we need to remove it from configsToEval 
+		   		if (openVector.at(i) == closedVector.at(j))
+		   		{
+		   			openVector.erase(openVector.begin() + i);
+		   			//re-heapify
+		   			make_heap(openVector.begin(), openVector.end(), compare());
+		   		}
+
+		   	}
+		   
+		   }
+		      
 		//if not, then check if they are in the open list
 		//if in the open list:
+
+
 		//check to see if its total cost is lower than the current entry--> if so, replace with this and reheapify
 		//if not in the open list --> add this to the openVector and re heapify 
 
-
-
 		//check for redundant entries with a lower cost
-		for (int i=0; i < openVector.size(); i++)
+		for (unsigned int i=0; i < openVector.size(); i++)
 		{
-			
-			if (openVector.begin() == openVector.at(i) && openVector.begin()->totalCost < openVector.at(i)->totalCost)
+			if(tempTop == openVector.at(i) && 
+				tempTop.getTotalCost() < openVector.at(i).getTotalCost())
 			{
-				openVector.at(i) = openVector.begin();
+				openVector.at(i) = tempTop;
 				//re-heapify
 				make_heap(openVector.begin(),openVector.end(), compare());
 			}
 
 		}
-
-
-		//we found the config we want
-
-		
-
-
-
-
 	}
+}	
 
-
-   
-}
-
-
-
-
-
-
-
-
-void Sliding_Solver::setGoalString(const string & s)
-{
-   goalString = s;
-}
 
 
    
