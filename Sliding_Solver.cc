@@ -55,12 +55,16 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 
 	//push the initial configuration into the open vector
 	openVector.push_back((*initialConfig));
+	//push initial config into the closed vector
+	//closedVector.push_back((*initialConfig));
 
 	cout << "Open Vector to Start: " << endl;
 	for (unsigned int i =0; i < openVector.size(); i++)
 	{
 		cout << openVector.at(i);
 	}
+
+	//main while loop
 
 	while (!openVector.empty())
 	{
@@ -82,21 +86,96 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 			return;
 		}
 
+		
+		
+		//this is causing problems!
+		//***********************************************************************************
+
 		//remove the top element
 		openVector.pop_back();
-		//we have discovered the node, so now we need to put it in the closed Vector
-		closedVector.push_back(tempTop);
+		//***********************************************************************************
+		
+
+
+
+
+		//loop through the closed list and see if the top element is already in that list
+
+		for (unsigned int i =0; i < closedVector.size(); i++)
+		{
+			if (tempTop == closedVector.at(i))
+			{
+				cout << "tempTop is in the closed Vector, breaking" << endl;
+				break;
+			}
+			else {
+				cout << "tempTop is not in the closed Vector, push tempTop into the closed Vector" << endl;
+				closedVector.push_back(tempTop);
+			}
+		}
+		
+		
 
 		//list of next configurations coming up from the current top value
 		configsToEval = tempTop.nextConfigs();
 
-		//push everything into the open list
+		//need to see if the nextConfigs are already in the closed and open
 		for (lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
 		{
+			//initialize the total cost member for each of the potential new configs	
+			cout << "In the main for loop" << endl;
 			lit->setTotalCost(goalString);
-			openVector.push_back((*lit));
-		}
 
+			for (unsigned int i =0; i < closedVector.size(); i++)
+			{
+				//if in the closed list, then disregard it and break out
+				if (closedVector.at(i) == (*lit))
+				{
+					cout << "nextConfig is in the closed Vector, breaking out" << endl;
+					break;
+				}
+				//if not in the closed list
+				if (closedVector.at(i) != (*lit))
+				{
+					cout << "nextConfig is not in the closed Vector" << endl;
+					//check to see if it is in the open list
+
+					cout << "Open Vector's size: " << openVector.size() << endl;
+					for (unsigned int j =0; j < openVector.size(); j++)
+					{
+						//if it is in the open list, we need to see if this nextConfig's cost is lower than 
+						if (openVector.at(j) == (*lit))
+						{
+							cout << "nextConfig is in the open list" << endl;
+							//now do the comparison for a better configuration
+							if((*lit) == openVector.at(j) && lit->getTotalCost() < openVector.at(j).getTotalCost())
+							{
+								cout << "nextConfig is better than what is in open Vector, replacing" << endl;
+								openVector.at(j) = (*lit);
+								//re-heapify
+								make_heap(openVector.begin(),openVector.end(), compare());
+							}
+							//break out of the loop because we are not going to add it to the openVector again
+							cout << "nextConfig was in the open Vector but was not better, breaking" << endl;
+							break;
+						}
+						//if nothing else worked, then it is not in the open or closed list, so it needs to enter the open list
+						if (openVector.at(j) != (*lit))
+						{
+							cout << "nextConfig was not in the open or closed vector, adding it to the open vector" << endl;
+							openVector.push_back((*lit));
+							//reheapify
+							make_heap(openVector.begin(), openVector.end(), compare());
+						}
+					}
+				}
+			}
+			//lit->setTotalCost(goalString);
+			//openVector.push_back((*lit));
+		}
+		cout << "While loop ending" << endl;
+}
+/*
 		//for all nextConfigs, check to see if they are valid (i.e. visited yet and hence in the closed list)?
 		//if in closed list, disregard
 		for (unsigned int i = 0; i < openVector.size(); i++)
@@ -136,6 +215,7 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 
 		}
 	}
+	*/
 }	
 
 

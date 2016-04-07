@@ -45,16 +45,22 @@ int main()
    //testing the constructor to make sure is representing correctly
    std::cout << "Manhattan Distance: " << m_distance << endl;
    */
-   string initialString, goalString;
+   string initialString = "012345678"; 
+   string goalString = "102345678";
 
+/*
    cout << "Please enter the initial configuration: ";
    cin >> initialString;
    cout << endl;
+*/
+   
 
    Sliding_Solver test(initialString);
+  /*
    cout << "Enter the solution: ";
    cin >> goalString;
    cout << endl;
+   */
    test.Solve_Puzzle(goalString);
 
    return 0;

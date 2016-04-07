@@ -279,6 +279,21 @@ Board_Tile Board_Tile::operator=(const Board_Tile& bt)
    return *this;
 }
 
+bool Board_Tile::operator!=(const Board_Tile& bt)
+{
+  for (int i = 0; i < 3 ; i++)
+   {
+      for (int j = 0; j < 3; j++)
+      {
+        if (this->Array[i][j] != bt.Array[i][j])
+        {
+           return true;
+        }
+      }
+   }
+   return false; 
+}
+
 void Board_Tile::setTotalCost(const string& goalString)
 {
    totalCost = Manhattan_Distance(goalString) + numMoves();
@@ -293,3 +308,4 @@ string Board_Tile::getMovesFromStart() const
 {
    return moves_from_start;
 }
+

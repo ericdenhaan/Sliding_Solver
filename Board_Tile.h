@@ -35,6 +35,7 @@ class Board_Tile
    Board_Tile downMove(int, int);
    void addMove(const string&);
    bool operator==(const Board_Tile&);
+   bool operator !=(const Board_Tile&);
    //perhaps an assignment operator for replacing
    //configurations in the tree
    Board_Tile operator=(const Board_Tile&);
