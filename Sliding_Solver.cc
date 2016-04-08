@@ -3,6 +3,10 @@
 // Sliding_Solver Class Implementation
 // Written By: Eric Den Haan, Josh Vandenhoek, Lance Chisholm
 
+
+// WHERE DO WE POP THE TOP OFF THE OPEN VECTOR?????????
+
+
 #include "Sliding_Solver.h"
 
 struct compare 
@@ -63,14 +67,15 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 
 	//this makes a heap out of the open vector
 	make_heap(openVector.begin(), openVector.end(), compare());
+
+	//making a heap out of the closed vector
+	make_heap(closedVector.begin(), closedVector.end(), compare());
 	
 	while(!openVector.empty())
 	{
+		cout << "looping" << endl;
 		//temporarily hold the top element
 		Board_Tile tempTop = openVector.back();
-
-		//remove the top element
-		openVector.pop_back();
 
 		//found the config
 		if(tempTop == (*gc))
@@ -83,38 +88,52 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 			return;
 		}
 		
-		//list of next configurations coming up from the current top value
-		configsToEval = tempTop.nextConfigs();
-
-		for(lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
+		else
 		{
-			lit->setTotalCost(goalString);
+			openVector.pop_back();
+			cout << "not found yet" << endl;
+			//list of next configurations coming up from the current top value
+			configsToEval = tempTop.nextConfigs();
+
+			for(lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
+			{
+				lit->setTotalCost(goalString);
+			}
+
+			//for all nextConfigs, check to see if they are valid (i.e. visited yet and hence in the closed list)?
+			//if in closed list, disregard
+			for(lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
+			{
+				cout << "iterating outer" << endl;
+				for(unsigned int j = 0; j < closedVector.size(); j++)
+			   	{
+			   		cout << "interating inner" << endl;
+			   		//if the board tile in the configsToEval list is a member of the 
+			   		//closedList, we need to remove it from configsToEval 
+			   		if((*lit) == closedVector.at(j))
+			   		{
+			   			cout << "already in the closed list" << endl;
+			   			if((*lit).getTotalCost() < closedVector.at(j).getTotalCost())
+			   			{
+			   				cout << "lower cost, swapping" << endl;
+			   				closedVector.at(j) = (*lit);
+			   			}
+			   			else
+			   			{
+			   				cout << "pushing" << endl;
+			   			}
+			  			
+			  			openVector.push_back((*lit));
+			   			make_heap(openVector.begin(), openVector.end(), compare());
+			   			make_heap(closedVector.begin(), closedVector.end(), compare());
+			   		}
+			   	}			   
+			}
 		}
-
-		//for all nextConfigs, check to see if they are valid (i.e. visited yet and hence in the closed list)?
-		//if in closed list, disregard
-		for (lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
-		{
-			for(unsigned int j = 0; j < closedVector.size(); j++)
-		   	{
-		   		//if the board tile in the configsToEval list is a member of the 
-		   		//closedList, we need to remove it from configsToEval 
-		   		if((*lit) == closedVector.at(j))
-		   		{
-		   			if((*lit).getTotalCost() < closedVector.at(j).getTotalCost())
-		   			{
-		   				closedVector.at(j) = (*lit);
-		   			}
-		   			else
-		   			{
-		 				openVector.push_back((*lit));
-		   				closedVector.push_back((*lit));
-		   			}
-		   		
-		   		make_heap(openVector.begin(), openVector.end(), compare());
-		   		}
-		   	}			   
-		}	
+	}
+	if(openVector.empty())
+	{
+		cout << "not found!" << endl;
 	}
 }	
 
