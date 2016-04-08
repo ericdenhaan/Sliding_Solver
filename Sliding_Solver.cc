@@ -24,7 +24,7 @@ struct compare
 Sliding_Solver::Sliding_Solver(const string& s)
 {
    initialConfig = new Board_Tile(s); 
-   cout << *initialConfig;
+   cout << *initialConfig << endl;
 }
 
 //Destructor
@@ -35,6 +35,7 @@ Sliding_Solver::~Sliding_Solver(){}
 void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 {
 	goalString = goalConfig;
+	
 	//set the initialconfig tile's total cost to begin with
 	initialConfig->setTotalCost(goalString);
 
@@ -42,6 +43,7 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 	list<Board_Tile>::iterator lit;
 
 	Board_Tile* gc = new Board_Tile(goalConfig);
+	cout << *gc << endl;
 
 	//this list will contain all the board configurations that are potentially good candidates
 	//for the path
@@ -56,23 +58,22 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 	//push the initial configuration into the open vector
 	openVector.push_back((*initialConfig));
 
-	cout << "Open Vector to Start: " << endl;
-	for (unsigned int i =0; i < openVector.size(); i++)
-	{
-		cout << openVector.at(i);
-	}
+	//push the initial configuration into the closed vector
+	closedVector.push_back((*initialConfig));
 
-	while (!openVector.empty())
+	//this makes a heap out of the open vector
+	make_heap(openVector.begin(), openVector.end(), compare());
+	
+	while(!openVector.empty())
 	{
-		//this makes a heap out of the open vector
-		make_heap(openVector.begin(), openVector.end(), compare());
-
 		//temporarily hold the top element
 		Board_Tile tempTop = openVector.back();
 
+		//remove the top element
+		openVector.pop_back();
 
 		//found the config
-		if (tempTop == (*gc))
+		if(tempTop == (*gc))
 		{
 			cout << tempTop << endl;
 			string temp = tempTop.getMovesFromStart();
@@ -81,60 +82,39 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 			cout << "Number of Moves: " << number << endl;
 			return;
 		}
-
-		//remove the top element
-		openVector.pop_back();
-		//we have discovered the node, so now we need to put it in the closed Vector
-		closedVector.push_back(tempTop);
-
+		
 		//list of next configurations coming up from the current top value
 		configsToEval = tempTop.nextConfigs();
 
-		//push everything into the open list
-		for (lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
+		for(lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
 		{
 			lit->setTotalCost(goalString);
-			openVector.push_back((*lit));
 		}
 
 		//for all nextConfigs, check to see if they are valid (i.e. visited yet and hence in the closed list)?
 		//if in closed list, disregard
-		for (unsigned int i = 0; i < openVector.size(); i++)
-		   {
-			for (unsigned int j =0; j < closedVector.size(); j++)
+		for (lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
+		{
+			for(unsigned int j = 0; j < closedVector.size(); j++)
 		   	{
 		   		//if the board tile in the configsToEval list is a member of the 
 		   		//closedList, we need to remove it from configsToEval 
-		   		if (openVector.at(i) == closedVector.at(j))
+		   		if((*lit) == closedVector.at(j))
 		   		{
-		   			openVector.erase(openVector.begin() + i);
-		   			//re-heapify
-		   			make_heap(openVector.begin(), openVector.end(), compare());
+		   			if((*lit).getTotalCost() < closedVector.at(j).getTotalCost())
+		   			{
+		   				closedVector.at(j) = (*lit);
+		   			}
+		   			else
+		   			{
+		 				openVector.push_back((*lit));
+		   				closedVector.push_back((*lit));
+		   			}
+		   		
+		   		make_heap(openVector.begin(), openVector.end(), compare());
 		   		}
-
-		   	}
-		   
-		   }
-		      
-		//if not, then check if they are in the open list
-		//if in the open list:
-
-
-		//check to see if its total cost is lower than the current entry--> if so, replace with this and reheapify
-		//if not in the open list --> add this to the openVector and re heapify 
-
-		//check for redundant entries with a lower cost
-		for (unsigned int i=0; i < openVector.size(); i++)
-		{
-			if(tempTop == openVector.at(i) && 
-				tempTop.getTotalCost() < openVector.at(i).getTotalCost())
-			{
-				openVector.at(i) = tempTop;
-				//re-heapify
-				make_heap(openVector.begin(),openVector.end(), compare());
-			}
-
-		}
+		   	}			   
+		}	
 	}
 }	
 

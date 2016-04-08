@@ -75,8 +75,7 @@ list<Board_Tile> Board_Tile::nextConfigs()
 	     {
 	        indexi = i;
 	        indexj = j;
-	     }
-	 
+	     }	 
       }
    }
    
@@ -88,7 +87,7 @@ list<Board_Tile> Board_Tile::nextConfigs()
    switch(emptypos)
    {
       case 1:
-	 // can move D, L, R
+	// can move D, L, R
 	 nextConfigList.push_back(leftMove(indexi,indexj));
 	 nextConfigList.push_back(rightMove(indexi,indexj));
 	 nextConfigList.push_back(downMove(indexi,indexj));
@@ -241,9 +240,7 @@ Board_Tile Board_Tile::downMove(int i, int j)
 
 void Board_Tile::addMove(const string& s)
 {
-   cout << "Before Adding Move: " << moves_from_start << endl;
-   moves_from_start.append(s);//moves_from_start + s;
-   cout << "After Adding Move: " << moves_from_start << endl;
+   moves_from_start += s;
 }
 
 bool Board_Tile::operator==(const Board_Tile& bt)

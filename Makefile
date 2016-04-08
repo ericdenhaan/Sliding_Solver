@@ -1,6 +1,6 @@
-CCC = g++11
+CCC = g++
 
-CCCFLAGS = -Wall -g -std=c++11 -lpthread -lX11
+CCCFLAGS = -Wall -g -std=c++11 -lpthread
 
 all : main heap_test
 
