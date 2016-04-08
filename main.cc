@@ -9,17 +9,17 @@
 int main()
 {
   string initialString, goalString;
-
-   cout << "Please enter the initial configuration: ";
-   cin >> initialString;
-   cout << endl;
-
-   Sliding_Solver test(initialString);
-   cout << "Enter the solution: ";
-   cin >> goalString;
-   cout << endl;
-
-   test.Solve_Puzzle(goalString);
-
-   return 0;
+  
+  cout << "Please enter the initial configuration: ";
+  cin >> initialString;
+  cout << endl;
+  
+  Sliding_Solver test(initialString);
+  cout << "Enter the solution: ";
+  cin >> goalString;
+  cout << endl;
+  
+  test.Solve_Puzzle(goalString);
+  
+  return 0;
 }

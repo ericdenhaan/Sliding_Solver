@@ -1,7 +1,6 @@
 CCC = g++11
 
 CCCFLAGS = -Wall -g -std=c++11 -lpthread -lX11
-
 all : main
 
 main : Board_Tile.o Sliding_Solver.o main.o

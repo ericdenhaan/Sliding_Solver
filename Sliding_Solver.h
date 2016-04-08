@@ -16,24 +16,19 @@ using namespace std;
 
 class Sliding_Solver
 {
-public:
-   //Constructor
-
-   //the const string must be the start configuration?
-	Sliding_Solver(const string&);
-
-	//Destructor
-	~Sliding_Solver();
-
-	//Member Functions
-	void Solve_Puzzle(const string&);
-	//setter function that allows us to change the goalString
-	void setGoalString(const string&);
-
-  private:
-	//private data member that represents the initial goal configuration as a 
-	//board tile
-	Board_Tile* initialConfig;
-	string goalString;
+ public:
+  //Constructor
+  Sliding_Solver(const string&);
+  
+  //Destructor
+  ~Sliding_Solver();
+  
+  //Member Functions
+  void Solve_Puzzle(const string&);
+  void setGoalString(const string&);
+  
+ private:
+  Board_Tile* initialConfig;
+  string goalString;
 };
 #endif
