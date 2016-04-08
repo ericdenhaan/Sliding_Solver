@@ -5,7 +5,7 @@
 
 #include "Board_Tile.h"
 
-// Constructor
+//Constructor
 Board_Tile::Board_Tile(const string& s)
 {
   Array = new char *[3];
@@ -25,7 +25,7 @@ Board_Tile::Board_Tile(const string& s)
   config = s;
 }
 
-// Copy Constructor
+//Copy Constructor
 Board_Tile::Board_Tile(const Board_Tile& copy)
 {
   Array = new char*[3];
@@ -47,7 +47,7 @@ Board_Tile::Board_Tile(const Board_Tile& copy)
   totalCost = copy.totalCost;
 }
 
-// Destructor
+//Destructor
 Board_Tile::~Board_Tile()
 {
   for(int i = 0; i < 3; i++)
@@ -60,6 +60,7 @@ Board_Tile::~Board_Tile()
 }
 
 //nextConfigs Function
+//finds the next possible moves and returns them as a list
 list<Board_Tile> Board_Tile::nextConfigs()
 {
   list<Board_Tile> nextConfigList;
@@ -81,33 +82,33 @@ list<Board_Tile> Board_Tile::nextConfigs()
   
   int emptypos = indexi*3 + indexj;
   
-  // switch statement, with the possible positions of '0' and their moves
-  // depending on the position of '0', each case returns the possible new versions
-  // of config
+  //switch statement, with the possible positions of '0' and their moves
+  //depending on the position of '0', each case returns the possible new versions
+  //of config
   switch(emptypos)
     {
     case 1:
-      // can move D, L, R
+      //can move D, L, R
       nextConfigList.push_back(leftMove(indexi,indexj));
       nextConfigList.push_back(rightMove(indexi,indexj));
       nextConfigList.push_back(downMove(indexi,indexj));
       break;
       
     case 2:
-      // can move D, L
+      //can move D, L
       nextConfigList.push_back(leftMove(indexi,indexj));
       nextConfigList.push_back(downMove(indexi,indexj));
       break;
       
     case 3:
-      // can move U, R, D
+      //can move U, R, D
       nextConfigList.push_back(rightMove(indexi,indexj));
       nextConfigList.push_back(upMove(indexi,indexj));
       nextConfigList.push_back(downMove(indexi,indexj));
       break;
       
     case 4:
-      // can move L, U, R, D
+      //can move L, U, R, D
       nextConfigList.push_back(leftMove(indexi,indexj));
       nextConfigList.push_back(rightMove(indexi,indexj));
       nextConfigList.push_back(upMove(indexi,indexj));
@@ -115,33 +116,33 @@ list<Board_Tile> Board_Tile::nextConfigs()
       break;
       
     case 5:
-      // can move L, U, D
+      //can move L, U, D
       nextConfigList.push_back(leftMove(indexi,indexj));
       nextConfigList.push_back(upMove(indexi,indexj));
       nextConfigList.push_back(downMove(indexi,indexj));
       break;
       
     case 6:
-      // can move U, R
+      //can move U, R
       nextConfigList.push_back(rightMove(indexi,indexj));
       nextConfigList.push_back(upMove(indexi,indexj));	 
       break;
       
     case 7:
-      // can move L, U, R
+      //can move L, U, R
       nextConfigList.push_back(leftMove(indexi,indexj));
       nextConfigList.push_back(rightMove(indexi,indexj));
       nextConfigList.push_back(upMove(indexi,indexj));	 
       break;
       
     case 8:
-      // can move L, U
+      //can move L, U
       nextConfigList.push_back(leftMove(indexi,indexj));
       nextConfigList.push_back(upMove(indexi,indexj));
       break;
       
     default:
-      // can move D, U
+      //can move D, U
       nextConfigList.push_back(rightMove(indexi,indexj));
       nextConfigList.push_back(downMove(indexi,indexj));	 
       break;	 
@@ -150,13 +151,14 @@ list<Board_Tile> Board_Tile::nextConfigs()
   return nextConfigList;
 }
 
-// numMoves Function
+//numMoves function
+//returns the number of moves to reach the current configuration
 int Board_Tile::numMoves()
 {
   return moves_from_start.size();
 }
 
-// Manhattan Distance Calculation
+//Manhattan Distance calculation
 int Board_Tile::Manhattan_Distance(const Board_Tile& goalconfig)
 {
   int m_dist = 0;
@@ -191,7 +193,7 @@ int Board_Tile::Manhattan_Distance(const Board_Tile& goalconfig)
   return m_dist;
 }
 
-// Print Function (<< operator)
+//Print function (<< operator)
 ostream& operator<<(ostream& os, const Board_Tile& B)
 {
   for(int i = 0; i < 3; i++)
@@ -205,7 +207,7 @@ ostream& operator<<(ostream& os, const Board_Tile& B)
   return os;
 }
 
-// Movement Functions
+//Movement functions
 Board_Tile Board_Tile::rightMove(int i, int j)
 {
   Board_Tile* b = new Board_Tile(*this);
@@ -238,11 +240,14 @@ Board_Tile Board_Tile::downMove(int i, int j)
   return *b;
 }
 
+//addMove function
+//appends the current move to the moves_from_start string
 void Board_Tile::addMove(const string& s)
 {
   moves_from_start += s;
 }
 
+//Comparison (==) operator
 bool Board_Tile::operator==(const Board_Tile& bt)
 {
   for (int i = 0; i < 3 ; i++)
@@ -258,7 +263,7 @@ bool Board_Tile::operator==(const Board_Tile& bt)
   return true;
 }
 
-// Assignment Operator
+//Assignment Operator
 Board_Tile Board_Tile::operator=(const Board_Tile& bt)
 {
   for (int i=0;i <3; i++)
@@ -276,16 +281,23 @@ Board_Tile Board_Tile::operator=(const Board_Tile& bt)
   return *this;
 }
 
+//setTotalCost function
+//adds the number of moves and manhattan distance for a given
+//configuration
 void Board_Tile::setTotalCost(const string& goalString)
 {
   totalCost = Manhattan_Distance(goalString) + numMoves();
 }  
 
+//getTotalCost function
+//returns the total cost of a given configuration
 int Board_Tile::getTotalCost() const
 {
   return totalCost;
 }
 
+//getMovesFromStart function
+//returns the moves taken to reach a given configuration
 string Board_Tile::getMovesFromStart() const
 {
   return moves_from_start;

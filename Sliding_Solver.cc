@@ -5,6 +5,8 @@
 
 #include "Sliding_Solver.h"
 
+//Compare struct
+//determines the order in which to sort the heap (by lowest total cost)
 struct compare 
 {
   bool operator()(const Board_Tile& a, const Board_Tile& b)
@@ -30,9 +32,11 @@ Sliding_Solver::Sliding_Solver(const string& s)
 //Destructor
 Sliding_Solver::~Sliding_Solver(){}
 
-//this is the function that will be responsible for solving the puzzle
+//Solve_Puzzle function
+//solves the puzzle using A* search
 void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 {
+  //set the goalString data member
   goalString = goalConfig;
   
   //set the initialconfig tile's total cost to begin with
@@ -75,12 +79,17 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 	  return;
 	}
       
+      //if a solution not found yet:
       else
 	{
 	  openVector.pop_back();
 	  closedVector.push_back(tempTop);
 	  configsToEval = tempTop.nextConfigs();
 	  
+	  //iterate over the next configurations, set their total cost, and
+	  //determine whether they are in the closed list already
+	  //if in the closed list, but a version with a lower cost is in the 
+	  //next configurations, replace that element in the closed list
 	  for(lit = configsToEval.begin(); lit != configsToEval.end(); ++lit)
 	    {
 	      for (unsigned int i = 0; i < closedVector.size(); i++)
@@ -95,6 +104,8 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 		    }
 	    	}
 	      
+	      //add each next configuration to the open list if it is not 
+	      //currently in the list
 	      if(openVector.empty())
 	    	{
 		  openVector.push_back((*lit));	 
@@ -119,11 +130,13 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 	    	}
 	    }
 	  
+	  //sort the vectors into min-heaps
 	  make_heap(openVector.begin(), openVector.end(), compare());
 	  make_heap(closedVector.begin(), closedVector.end(), compare());
 	}
     }
   
+  //if there is no solution (for example, incorrect input)
   if(openVector.empty())
     {
       cout << "Solution not found!" << endl;
