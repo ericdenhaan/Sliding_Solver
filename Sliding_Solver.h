@@ -24,11 +24,15 @@ class Sliding_Solver
   ~Sliding_Solver();
   
   //Member Functions
+  //Function that does the heavy lifting and actually solves the puzzle
   void Solve_Puzzle(const string&);
+  //setter function that handles setting the goal string for the Sliding_Solver object
   void setGoalString(const string&);
   
  private:
+  //private data member that is a board tile pointer, reprsents the initial configuration of the puzzle
   Board_Tile* initialConfig;
+  //string reprenting the configuration of the final board state
   string goalString;
 };
 #endif

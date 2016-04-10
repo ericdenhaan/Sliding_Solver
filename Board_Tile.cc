@@ -41,7 +41,7 @@ Board_Tile::Board_Tile(const Board_Tile& copy)
 	  Array[i][j] = copy.Array[i][j];
 	}
     }
-  
+  //make sure to copy over the private data members
   config = copy.config;
   moves_from_start = copy.moves_from_start;
   totalCost = copy.totalCost;
@@ -65,6 +65,7 @@ list<Board_Tile> Board_Tile::nextConfigs()
 {
   list<Board_Tile> nextConfigList;
   
+  //index of the 0 element in the 2D array
   int indexi;
   int indexj;
   
@@ -210,9 +211,13 @@ ostream& operator<<(ostream& os, const Board_Tile& B)
 //Movement functions
 Board_Tile Board_Tile::rightMove(int i, int j)
 {
-  Board_Tile* b = new Board_Tile(*this);
-  swap(b->Array[i][j], b->Array[i][j+1]);
-  b->addMove("R");
+   //make a new board tile that is a copy of this 
+   Board_Tile* b = new Board_Tile(*this);
+   //swap the positions of b's appropriate array member
+   swap(b->Array[i][j], b->Array[i][j+1]);
+   //add a move to b that represents the change that just happened
+   b->addMove("R");
+   //return the board tile
   return *b;
 }
 
@@ -273,7 +278,7 @@ Board_Tile Board_Tile::operator=(const Board_Tile& bt)
 	  this->Array[i][j] = bt.Array[i][j];
 	}
     }
-  
+  //make sure to copy over the private data members
   this->config = bt.config;
   this->totalCost = bt.totalCost;
   this->moves_from_start = bt.moves_from_start;

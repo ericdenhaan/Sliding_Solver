@@ -112,17 +112,21 @@ void Sliding_Solver::Solve_Puzzle(const string& goalConfig)
 	    	}
 	      else
 	    	{
-		  bool shouldPush = true;
+		   //boolean flag that determines if the current configuration should be pushed into the
+		   //open vector
+		   bool shouldPush = true;
 		  
 		  for(unsigned int i = 0; i < openVector.size(); i++)
 		    {
-		      if((*lit) == openVector.at(i))
+		       //if the current configuration is already in the open vector, don't push it in again
+		       if((*lit) == openVector.at(i))
 			{
 			  shouldPush = false;
 			  break;
 			}
 		    }
-		  
+
+		  //if it is not in the open vector, push it in
 		  if(shouldPush)
 		    {
 		      openVector.push_back((*lit));
